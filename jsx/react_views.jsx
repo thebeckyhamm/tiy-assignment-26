@@ -8,7 +8,10 @@ tiy.views = {};
 
         render: function() {
             return (
-                <header>Page One</header>
+                <header>
+                    <h1>Page One</h1>
+                    <img src="images/success.png" />
+                </header>
 
             );
         }
@@ -18,7 +21,10 @@ tiy.views = {};
 
         render: function() {
             return (
-                <header>Page Two</header>
+                <header>
+                    <h1>Page Two</h1>
+                    <img src="images/nph.gif" />
+                </header>
 
             );
         }
@@ -51,7 +57,8 @@ tiy.views = {};
             var currentPage = this.whichPage(this.props.show);
             // when a link is clicked, call the onNav function to
             // tell onShow what link to navigate to. We pass in the
-            // link name by binding it.
+            // link name by binding it. It's an easier way to pass
+            // a parameter. 
             return (
                 <div>
                     <nav>
@@ -67,7 +74,7 @@ tiy.views = {};
 
                         </ul>
                     </nav>
-                    <div>{currentPage}</div>
+                    <div className="content">{currentPage}</div>
                 </div>
 
             );

@@ -8,7 +8,10 @@ tiy.views = {};
 
         render: function() {
             return (
-                React.createElement("header", null, "Page One")
+                React.createElement("header", null, 
+                    React.createElement("h1", null, "Page One"), 
+                    React.createElement("img", {src: "images/success.png"})
+                )
 
             );
         }
@@ -18,7 +21,10 @@ tiy.views = {};
 
         render: function() {
             return (
-                React.createElement("header", null, "Page Two")
+                React.createElement("header", null, 
+                    React.createElement("h1", null, "Page Two"), 
+                    React.createElement("img", {src: "images/nph.gif"})
+                )
 
             );
         }
@@ -51,7 +57,8 @@ tiy.views = {};
             var currentPage = this.whichPage(this.props.show);
             // when a link is clicked, call the onNav function to
             // tell onShow what link to navigate to. We pass in the
-            // link name by binding it.
+            // link name by binding it. It's an easier way to pass
+            // a parameter. 
             return (
                 React.createElement("div", null, 
                     React.createElement("nav", null, 
@@ -67,7 +74,7 @@ tiy.views = {};
 
                         )
                     ), 
-                    React.createElement("div", null, currentPage)
+                    React.createElement("div", {className: "content"}, currentPage)
                 )
 
             );
