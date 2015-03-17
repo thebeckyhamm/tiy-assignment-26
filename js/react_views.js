@@ -4,40 +4,77 @@ tiy.views = {};
 (function(ns){
 
 
-    var Header = React.createClass({displayName: "Header",
+    var OneHeader = React.createClass({displayName: "OneHeader",
 
         render: function() {
             return (
-                React.createElement("header", null, "test")
+                React.createElement("header", null, "Page One")
 
             );
         }
     });
 
-    // var Page = React.createClass({
+    var TwoHeader = React.createClass({displayName: "TwoHeader",
 
-    //     whichPage: function() {
+        render: function() {
+            return (
+                React.createElement("header", null, "Page Two")
 
+            );
+        }
+    });
 
+    var Page = React.createClass({displayName: "Page",
+        // if the show property is pageone, then return
+        // the rendered OneHeader, etc.
+        whichPage: function(show) {
+            if (show === "pageone") {
+                return React.createElement(OneHeader, null);
+            }
+            else if (show === "pagetwo") {
+                return React.createElement(TwoHeader, null);
+            }
+        },
+        // e gets passed after the bound parameter
+        onNav: function(show, e) {
+            e.preventDefault();
+            // pass the showing page to props.onShow (which is a prop
+            // that is called when rendered)
+            this.props.onShow(show);
 
-    //     },
+        },
 
-    //     render: function() {
-    //         return (
-    //             <nav>
-    //                 <ul>
-    //                     <li><a href="">Page 1</a></li>
-    //                     <li><a href="">Page 2</a></li>
+        render: function() {
+            // set the current page to the return value
+            // of the whichPage function with the show
+            // property as a parameter
+            var currentPage = this.whichPage(this.props.show);
+            // when a link is clicked, call the onNav function to
+            // tell onShow what link to navigate to. We pass in the
+            // link name by binding it.
+            return (
+                React.createElement("div", null, 
+                    React.createElement("nav", null, 
+                        React.createElement("ul", null, 
+                            React.createElement("li", null, React.createElement("a", {href: "#", onClick: 
+                                this.onNav.bind(this, "pageone")}, "Page 1"
+                                )
+                            ), 
+                            React.createElement("li", null, React.createElement("a", {href: "#", onClick: 
+                                this.onNav.bind(this, "pagetwo")}, "Page 2"
+                                )
+                            )
 
-    //                 </ul>
-    //             </nav>
-    //             <Header pageName="{this.whichPage}" />
+                        )
+                    ), 
+                    React.createElement("div", null, currentPage)
+                )
 
-    //         );
-    //     }
-    // });
+            );
+        }
+    });
 
-ns.Header = Header;
+ns.Page = Page;
 
 
 })(tiy.views);

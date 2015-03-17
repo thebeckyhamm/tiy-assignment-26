@@ -4,40 +4,77 @@ tiy.views = {};
 (function(ns){
 
 
-    var Header = React.createClass({
+    var OneHeader = React.createClass({
 
         render: function() {
             return (
-                <header>test</header>
+                <header>Page One</header>
 
             );
         }
     });
 
-    // var Page = React.createClass({
+    var TwoHeader = React.createClass({
 
-    //     whichPage: function() {
+        render: function() {
+            return (
+                <header>Page Two</header>
 
+            );
+        }
+    });
 
+    var Page = React.createClass({
+        // if the show property is pageone, then return
+        // the rendered OneHeader, etc.
+        whichPage: function(show) {
+            if (show === "pageone") {
+                return <OneHeader/>;
+            }
+            else if (show === "pagetwo") {
+                return <TwoHeader/>;
+            }
+        },
+        // e gets passed after the bound parameter
+        onNav: function(show, e) {
+            e.preventDefault();
+            // pass the showing page to props.onShow (which is a prop
+            // that is called when rendered)
+            this.props.onShow(show);
 
-    //     },
+        },
 
-    //     render: function() {
-    //         return (
-    //             <nav>
-    //                 <ul>
-    //                     <li><a href="">Page 1</a></li>
-    //                     <li><a href="">Page 2</a></li>
+        render: function() {
+            // set the current page to the return value
+            // of the whichPage function with the show
+            // property as a parameter
+            var currentPage = this.whichPage(this.props.show);
+            // when a link is clicked, call the onNav function to
+            // tell onShow what link to navigate to. We pass in the
+            // link name by binding it.
+            return (
+                <div>
+                    <nav>
+                        <ul>
+                            <li><a href="#" onClick={
+                                this.onNav.bind(this, "pageone")}>Page 1
+                                </a>
+                            </li>
+                            <li><a href="#" onClick={
+                                this.onNav.bind(this, "pagetwo")}>Page 2
+                                </a>
+                            </li>
 
-    //                 </ul>
-    //             </nav>
-    //             <Header pageName="{this.whichPage}" />
+                        </ul>
+                    </nav>
+                    <div>{currentPage}</div>
+                </div>
 
-    //         );
-    //     }
-    // });
+            );
+        }
+    });
 
-ns.Header = Header;
+ns.Page = Page;
 
 
 })(tiy.views);

@@ -1,37 +1,43 @@
 tiy.Router = Backbone.Router.extend({
 
     routes: {
-        "" : "",
+        "" : "clear",
         "pageone" : "showPageOne",
         "pagetwo" : "showPageTwo"
     },
 
     initialize: function() {
 
-        var header = React.createElement(tiy.views.Header, {
-            onShow: this.showPages
+        var page = React.createElement(tiy.views.Page, {
+            // property onShow is given the function showPages
+            onShow: this.showPages.bind(this)
         });
 
-        this.header = React.render(header, document.body); 
+        this.page = React.render(page, document.body); 
     },
 
     showPages: function(page) {
-        if(page === "pageOne") {
+        console.log(page);
+        if(page === "pageone") {
             this.showPageOne();
             this.navigate("pageone");
         }
-        else if (page === "pageTwo") {
+        else if (page === "pagetwo") {
             this.showPageTwo();
             this.navigate("pagetwo");
         }
     },
 
     showPageOne: function() {
-        this.header.setProps({pageName: "Page One"});
+        this.page.setProps({show: "pageone"});
     },
 
     showPageTwo: function() {
-        this.header.setProps({pageName: "Page Two"});
+        this.page.setProps({show: "pagetwo"});
+    },
+
+    clear: function() {
+        this.page.setProps({show: null});
     }
 
 
